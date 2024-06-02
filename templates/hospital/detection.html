@@ -226,7 +226,36 @@
             }
 
             return { diseases: possibleDiseases, medicines: possibleMedicines };
+
+            <div id="predictionResult"></div>
+<button onclick="savePrediction()">Confirm Disease and Medications</button>
         }
     </script>
+    <script>
+    function savePrediction() {
+        var confirmedDisease = document.querySelector('.disease-name').innerText;
+        var confirmedMedications = document.querySelectorAll('.medicine-list a');
+        var medicationsArray = [];
+        confirmedMedications.forEach(function(medication) {
+            medicationsArray.push(medication.innerText);
+        });
+
+        // AJAX request to save confirmed disease and medications
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/save-prediction', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                alert('Prediction saved successfully!');
+            } else {
+                alert('Failed to save prediction. Please try again.');
+            }
+        };
+        xhr.onerror = function() {
+            alert('Failed to save prediction. Please try again.');
+        };
+        xhr.send(JSON.stringify({ disease: confirmedDisease, medications: medicationsArray }));
+    }
+</script>
 </body>
 </html>
