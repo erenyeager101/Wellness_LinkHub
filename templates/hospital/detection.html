@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #007bff;
+            animation: fadeIn 2s ease-in-out;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            animation: slideIn 1s ease-in-out;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        #predictionResult {
+            margin-top: 20px;
+            font-weight: bold;
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .disease-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .disease-list li {
+            background-color: #e9ecef;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Disease Prediction</h1>
+    <form id="symptomForm" onsubmit="predictDisease(event)">
+        <label for="symptoms">Select Symptoms:</label>
+        <div>
+            <input type="checkbox" name="symptoms" value="Fever"> Fever<br>
+            <input type="checkbox" name="symptoms" value="Cough"> Cough<br>
+            <input type="checkbox" name="symptoms" value="Sore throat"> Sore throat<br>
+            <input type="checkbox" name="symptoms" value="Runny nose"> Runny nose<br>
+            <input type="checkbox" name="symptoms" value="Headache"> Headache<br>
+            <!-- Additional symptoms -->
+            <input type="checkbox" name="symptoms" value="Anxiety and nervousness"> Anxiety and nervousness<br>
+            <input type="checkbox" name="symptoms" value="Depression"> Depression<br>
+            <input type="checkbox" name="symptoms" value="Shortness of breath"> Shortness of breath<br>
+            <input type="checkbox" name="symptoms" value="Depressive or psychotic symptoms"> Depressive or psychotic symptoms<br>
+            <input type="checkbox" name="symptoms" value="Hand or finger pain"> Hand or finger pain<br>
+            <input type="checkbox" name="symptoms" value="Wrist pain"> Wrist pain<br>
+            <input type="checkbox" name="symptoms" value="Hand or finger swelling"> Hand or finger swelling<br>
+            <input type="checkbox" name="symptoms" value="Arm pain"> Arm pain<br>
+            <input type="checkbox" name="symptoms" value="Sharp abdominal pain"> Sharp abdominal pain<br>
+            <input type="checkbox" name="symptoms" value="Upper abdominal pain"> Upper abdominal pain<br>
+            <input type="checkbox" name="symptoms" value="Stomach bloating"> Stomach bloating<br>
+            <input type="checkbox" name="symptoms" value="Changes in stool appearance"> Changes in stool appearance<br>
+            <input type="checkbox" name="symptoms" value="Wheezing"> Wheezing<br>
+            <input type="checkbox" name="symptoms" value="Difficulty breathing"> Difficulty breathing<br>
+            <input type="checkbox" name="symptoms" value="Shoulder cramps or spasms"> Shoulder cramps or spasms<br>
+            <input type="checkbox" name="symptoms" value="Ankle pain"> Ankle pain<br>
+            <input type="checkbox" name="symptoms" value="Allergic reaction"> Allergic reaction<br>
+            <input type="checkbox" name="symptoms" value="Skin rash"> Skin rash<br>
+            <input type="checkbox" name="symptoms" value="Itching of skin"> Itching of skin<br>
+            <input type="checkbox" name="symptoms" value="Nasal congestion"> Nasal congestion<br>
+            <!-- Add more checkboxes for other symptoms -->
+        </div>
+        <button type="submit">Predict Disease</button>
+    </form>
+
+    <div id="predictionResult"></div>
+
+    <script>
+        function predictDisease(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Get selected symptoms
+            var symptoms = [];
+            var checkboxes = document.getElementsByName('symptoms');
+            checkboxes.forEach(function(checkbox) {
+                if (checkbox.checked) {
+                    symptoms.push(checkbox.value);
+                }
+            });
+
+            // Predict diseases based on symptoms
+            var possibleDiseases = predict(symptoms);
+
+            // Display possible diseases
+            var resultDiv = document.getElementById('predictionResult');
+            if (possibleDiseases.length > 0 && possibleDiseases[0] !== "Unknown") {
+                resultDiv.innerHTML = "Possible Diseases:";
+                var diseaseList = document.createElement('ul');
+                diseaseList.className = 'disease-list';
+                possibleDiseases.forEach(function(disease) {
+                    var listItem = document.createElement('li');
+                    listItem.textContent = disease;
+                    diseaseList.appendChild(listItem);
+                });
+                resultDiv.appendChild(diseaseList);
+            } else {
+                resultDiv.innerHTML = "Possible Diseases: Unknown";
+            }
+        }
+
+        function predict(symptoms) {
+            // Disease prediction logic
+            var possibleDiseases = [];
+
+            // Check for Panic disorder
+            if (
+                symptoms.includes("Anxiety and nervousness") ||
+                symptoms.includes("Depression") ||
+                symptoms.includes("Shortness of breath") ||
+                symptoms.includes("Depressive or psychotic symptoms")
+            ) {
+                possibleDiseases.push("Panic disorder");
+            }
+
+            // Check for Fracture of the hand
+            if (
+                symptoms.includes("Hand or finger pain") ||
+                symptoms.includes("Wrist pain") ||
+                symptoms.includes("Hand or finger swelling") ||
+                symptoms.includes("Arm pain")
+            ) {
+                possibleDiseases.push("Fracture of the hand");
+            }
+
+            // Check for Liver cancer
+            if (
+                symptoms.includes("Sharp abdominal pain") ||
+                symptoms.includes("Upper abdominal pain") ||
+                symptoms.includes("Stomach bloating") ||
+                symptoms.includes("Changes in stool appearance")
+            ) {
+                possibleDiseases.push("Liver cancer");
+            }
+
+            // Check for Asthma
+            if (
+                symptoms.includes("Cough") ||
+                symptoms.includes("Shortness of breath") ||
+                symptoms.includes("Wheezing") ||
+                symptoms.includes("Difficulty breathing")
+            ) {
+                possibleDiseases.push("Asthma");
+            }
+
+            // Check for Dengue fever
+            if (
+                symptoms.includes("Sore throat") ||
+                symptoms.includes("Fever") ||
+                symptoms.includes("Shoulder cramps or spasms") ||
+                symptoms.includes("Ankle pain")
+            ) {
+                possibleDiseases.push("Dengue fever");
+            }
+
+            // Check for Food allergy
+            if (
+                symptoms.includes("Allergic reaction") ||
+                symptoms.includes("Skin rash") ||
+                symptoms.includes("Itching of skin") ||
+                symptoms.includes("Nasal congestion")
+            ) {
+                possibleDiseases.push("Food allergy");
+            }
+
+            if (possibleDiseases.length === 0) {
+                possibleDiseases.push("Unknown");
+            }
+
+            return possibleDiseases;
+        }
+    </script>
+</body>
+</html>
