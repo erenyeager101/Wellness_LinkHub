@@ -794,3 +794,20 @@ def detection_view(request):
 
 def insurance_view(request):
     return render(request, 'hospital/insurance.html')
+
+
+# views.py
+
+from django.shortcuts import render
+from django.http import JsonResponse
+
+def save_prediction(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        disease = data.get('disease')
+        medications = data.get('medications')
+        # Save disease and medications to the database or any other storage mechanism
+        return JsonResponse({'message': 'Prediction saved successfully!'}, status=200)
+    else:
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+
