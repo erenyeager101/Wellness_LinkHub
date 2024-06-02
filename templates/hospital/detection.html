@@ -136,7 +136,7 @@
             <input type="checkbox" name="symptoms" value="Weakness"> Weakness<br>
             <input type="checkbox" name="symptoms" value="Rapid heartbeat"> Rapid heartbeat<br>
             <input type="checkbox" name="symptoms" value="Skin rash"> Skin rash<br>
-            <!-- Add more checkboxes for other symptoms if needed -->
+
         </div>
         <button type="submit">Predict Disease</button>
     </form>
@@ -155,8 +155,6 @@
                     symptoms.push(checkbox.value);
                 }
             });
-
-            // Predict diseases based on symptoms
             var prediction = predict(symptoms);
 
             // Display possible diseases and prescriptions
@@ -180,7 +178,7 @@
         }
 
         function predict(symptoms) {
-            // Disease prediction logic
+
             var diseaseData = [
                 { symptoms: ["Fever", "Cough"], disease: "Common Cold", medicines: ["Ibuprofen", "Rest"] },
                 { symptoms: ["Headache", "Fatigue"], disease: "Migraine", medicines: ["Sumatriptan"] },
@@ -240,7 +238,7 @@
             medicationsArray.push(medication.innerText);
         });
 
-        // AJAX request to save confirmed disease and medications
+      
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '/save-prediction', true);
         xhr.setRequestHeader('Content-Type', 'application/json');
