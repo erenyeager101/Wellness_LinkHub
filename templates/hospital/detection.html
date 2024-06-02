@@ -48,7 +48,6 @@
         }
         #predictionResult {
             margin-top: 20px;
-            font-weight: bold;
             text-align: center;
             animation: fadeIn 2s ease-in-out;
         }
@@ -74,12 +73,35 @@
             list-style: none;
             padding: 0;
             margin: 0;
+            max-width: 400px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         .disease-list li {
-            background-color: #e9ecef;
-            margin: 5px 0;
+            border-bottom: 1px solid #e9ecef;
             padding: 10px;
-            border-radius: 4px;
+        }
+        .disease-list li:last-child {
+            border-bottom: none;
+        }
+        .disease-name {
+            font-weight: bold;
+            color: #007bff;
+        }
+        .medicine-list {
+            margin-top: 5px;
+            color: #555;
+        }
+        .medicine-list a {
+            display: inline-block;
+            margin: 5px 0;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .medicine-list a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -93,28 +115,28 @@
             <input type="checkbox" name="symptoms" value="Sore throat"> Sore throat<br>
             <input type="checkbox" name="symptoms" value="Runny nose"> Runny nose<br>
             <input type="checkbox" name="symptoms" value="Headache"> Headache<br>
-            <!-- Additional symptoms -->
-            <input type="checkbox" name="symptoms" value="Anxiety and nervousness"> Anxiety and nervousness<br>
-            <input type="checkbox" name="symptoms" value="Depression"> Depression<br>
+            <input type="checkbox" name="symptoms" value="Fatigue"> Fatigue<br>
             <input type="checkbox" name="symptoms" value="Shortness of breath"> Shortness of breath<br>
-            <input type="checkbox" name="symptoms" value="Depressive or psychotic symptoms"> Depressive or psychotic symptoms<br>
-            <input type="checkbox" name="symptoms" value="Hand or finger pain"> Hand or finger pain<br>
-            <input type="checkbox" name="symptoms" value="Wrist pain"> Wrist pain<br>
-            <input type="checkbox" name="symptoms" value="Hand or finger swelling"> Hand or finger swelling<br>
-            <input type="checkbox" name="symptoms" value="Arm pain"> Arm pain<br>
-            <input type="checkbox" name="symptoms" value="Sharp abdominal pain"> Sharp abdominal pain<br>
-            <input type="checkbox" name="symptoms" value="Upper abdominal pain"> Upper abdominal pain<br>
-            <input type="checkbox" name="symptoms" value="Stomach bloating"> Stomach bloating<br>
-            <input type="checkbox" name="symptoms" value="Changes in stool appearance"> Changes in stool appearance<br>
-            <input type="checkbox" name="symptoms" value="Wheezing"> Wheezing<br>
-            <input type="checkbox" name="symptoms" value="Difficulty breathing"> Difficulty breathing<br>
-            <input type="checkbox" name="symptoms" value="Shoulder cramps or spasms"> Shoulder cramps or spasms<br>
-            <input type="checkbox" name="symptoms" value="Ankle pain"> Ankle pain<br>
-            <input type="checkbox" name="symptoms" value="Allergic reaction"> Allergic reaction<br>
+            <input type="checkbox" name="symptoms" value="Nausea"> Nausea<br>
+            <input type="checkbox" name="symptoms" value="Vomiting"> Vomiting<br>
+            <input type="checkbox" name="symptoms" value="Joint pain"> Joint pain<br>
+            <input type="checkbox" name="symptoms" value="Dizziness"> Dizziness<br>
+            <input type="checkbox" name="symptoms" value="Itching"> Itching<br>
+            <input type="checkbox" name="symptoms" value="Redness"> Redness<br>
+            <input type="checkbox" name="symptoms" value="Abdominal pain"> Abdominal pain<br>
+            <input type="checkbox" name="symptoms" value="Bloating"> Bloating<br>
+            <input type="checkbox" name="symptoms" value="Sadness"> Sadness<br>
+            <input type="checkbox" name="symptoms" value="Muscle aches"> Muscle aches<br>
+            <input type="checkbox" name="symptoms" value="Sneezing"> Sneezing<br>
+            <input type="checkbox" name="symptoms" value="Blurred vision"> Blurred vision<br>
+            <input type="checkbox" name="symptoms" value="Diarrhea"> Diarrhea<br>
+            <input type="checkbox" name="symptoms" value="Swelling"> Swelling<br>
+            <input type="checkbox" name="symptoms" value="Back pain"> Back pain<br>
+            <input type="checkbox" name="symptoms" value="Numbness"> Numbness<br>
+            <input type="checkbox" name="symptoms" value="Weakness"> Weakness<br>
+            <input type="checkbox" name="symptoms" value="Rapid heartbeat"> Rapid heartbeat<br>
             <input type="checkbox" name="symptoms" value="Skin rash"> Skin rash<br>
-            <input type="checkbox" name="symptoms" value="Itching of skin"> Itching of skin<br>
-            <input type="checkbox" name="symptoms" value="Nasal congestion"> Nasal congestion<br>
-            <!-- Add more checkboxes for other symptoms -->
+            <!-- Add more checkboxes for other symptoms if needed -->
         </div>
         <button type="submit">Predict Disease</button>
     </form>
@@ -135,94 +157,75 @@
             });
 
             // Predict diseases based on symptoms
-            var possibleDiseases = predict(symptoms);
+            var prediction = predict(symptoms);
 
-            // Display possible diseases
+            // Display possible diseases and prescriptions
             var resultDiv = document.getElementById('predictionResult');
-            if (possibleDiseases.length > 0 && possibleDiseases[0] !== "Unknown") {
-                resultDiv.innerHTML = "Possible Diseases:";
+            if (prediction.diseases.length > 0 && prediction.diseases[0] !== "Unknown") {
+                resultDiv.innerHTML = "<h2>Possible Diseases and Prescriptions:</h2>";
                 var diseaseList = document.createElement('ul');
                 diseaseList.className = 'disease-list';
-                possibleDiseases.forEach(function(disease) {
+                prediction.diseases.forEach(function(disease, index) {
                     var listItem = document.createElement('li');
-                    listItem.textContent = disease;
+                    var medicinesHTML = prediction.medicines[index].map(function(medicine) {
+                        return '<a href="https://www.1mg.com/search/all?name=' + encodeURIComponent(medicine) + '" target="_blank">' + medicine + '</a>';
+                    }).join(", ");
+                    listItem.innerHTML = "<span class='disease-name'>" + disease + ":</span><div class='medicine-list'>" + medicinesHTML + "</div>";
                     diseaseList.appendChild(listItem);
                 });
                 resultDiv.appendChild(diseaseList);
             } else {
-                resultDiv.innerHTML = "Possible Diseases: Unknown";
+                resultDiv.innerHTML = "<h2>Possible Diseases:</h2><p>Unknown. Please select multiple symptoms if necessary.</p>";
             }
         }
 
         function predict(symptoms) {
             // Disease prediction logic
+            var diseaseData = [
+                { symptoms: ["Fever", "Cough"], disease: "Common Cold", medicines: ["Ibuprofen", "Rest"] },
+                { symptoms: ["Headache", "Fatigue"], disease: "Migraine", medicines: ["Sumatriptan"] },
+                { symptoms: ["Shortness of breath"], disease: "Asthma", medicines: ["Albuterol Inhaler"] },
+                { symptoms: ["Nausea", "Vomiting"], disease: "Gastroenteritis", medicines: ["Oral Rehydration"] },
+                { symptoms: ["Sore Throat"], disease: "Strep Throat", medicines: ["Penicillin"] },
+                { symptoms: ["Joint pain", "Fatigue"], disease: "Arthritis", medicines: ["NSAIDs"] },
+                { symptoms: ["Chest pain", "Dizziness"], disease: "Hypertension", medicines: ["Amlodipine"] },
+                { symptoms: ["Itching", "Redness"], disease: "Allergic Reaction", medicines: ["Antihistamine"] },
+                { symptoms: ["Abdominal pain", "Bloating"], disease: "Indigestion", medicines: ["Antacids"] },
+                { symptoms: ["Fatigue", "Sadness"], disease: "Major Depressive", medicines: ["Sertraline"] },
+                { symptoms: ["Fever", "Muscle aches"], disease: "Influenza", medicines: ["Acetaminophen"] },
+                { symptoms: ["Cough", "Sneezing"], disease: "Common Cold", medicines: ["Honey", "Rest"] },
+                { symptoms: ["Nausea", "Dizziness"], disease: "Motion Sickness", medicines: ["Dimenhydrinate"] },
+                { symptoms: ["Shortness of breath"], disease: "Chronic Bronchitis", medicines: ["Inhalers"] },
+                { symptoms: ["Headache", "Blurred vision"], disease: "Migraine", medicines: ["Beta-blockers"] },
+                { symptoms: ["Stomach pain", "Diarrhea"], disease: "Gastritis", medicines: ["Antacids", "Rest"] },
+                { symptoms: ["Joint pain", "Swelling"], disease: "Rheumatoid Arthritis", medicines: ["NSAIDs"] },
+                { symptoms: ["Fever", "Sore Throat"], disease: "Tonsillitis", medicines: ["Fluids", "Rest"] },
+                { symptoms: ["Back pain", "Numbness"], disease: "Sciatica", medicines: ["Pain Relievers"] },
+                { symptoms: ["Nausea", "Vomiting"], disease: "Morning Sickness", medicines: ["Ginger", "Vitamin B6"] },
+                { symptoms: ["Fatigue", "Weakness"], disease: "Iron Deficiency", medicines: ["Iron Supplements"] },
+                { symptoms: ["Anxiety", "Rapid heartbeat"], disease: "Panic Disorder", medicines: ["Cognitive Therapy"] },
+                { symptoms: ["Shortness of breath"], disease: "Sleep Apnea", medicines: ["CPAP Machine"] },
+                { symptoms: ["Skin rash", "Itching"], disease: "Dermatitis", medicines: ["Topical Steroids"] },
+                { symptoms: ["Cough", "Fever"], disease: "Respiratory infection", medicines: ["Antivirals", "Rest"] }
+            ];
+
             var possibleDiseases = [];
+            var possibleMedicines = [];
 
-            // Check for Panic disorder
-            if (
-                symptoms.includes("Anxiety and nervousness") ||
-                symptoms.includes("Depression") ||
-                symptoms.includes("Shortness of breath") ||
-                symptoms.includes("Depressive or psychotic symptoms")
-            ) {
-                possibleDiseases.push("Panic disorder");
-            }
-
-            // Check for Fracture of the hand
-            if (
-                symptoms.includes("Hand or finger pain") ||
-                symptoms.includes("Wrist pain") ||
-                symptoms.includes("Hand or finger swelling") ||
-                symptoms.includes("Arm pain")
-            ) {
-                possibleDiseases.push("Fracture of the hand");
-            }
-
-            // Check for Liver cancer
-            if (
-                symptoms.includes("Sharp abdominal pain") ||
-                symptoms.includes("Upper abdominal pain") ||
-                symptoms.includes("Stomach bloating") ||
-                symptoms.includes("Changes in stool appearance")
-            ) {
-                possibleDiseases.push("Liver cancer");
-            }
-
-            // Check for Asthma
-            if (
-                symptoms.includes("Cough") ||
-                symptoms.includes("Shortness of breath") ||
-                symptoms.includes("Wheezing") ||
-                symptoms.includes("Difficulty breathing")
-            ) {
-                possibleDiseases.push("Asthma");
-            }
-
-            // Check for Dengue fever
-            if (
-                symptoms.includes("Sore throat") ||
-                symptoms.includes("Fever") ||
-                symptoms.includes("Shoulder cramps or spasms") ||
-                symptoms.includes("Ankle pain")
-            ) {
-                possibleDiseases.push("Dengue fever");
-            }
-
-            // Check for Food allergy
-            if (
-                symptoms.includes("Allergic reaction") ||
-                symptoms.includes("Skin rash") ||
-                symptoms.includes("Itching of skin") ||
-                symptoms.includes("Nasal congestion")
-            ) {
-                possibleDiseases.push("Food allergy");
-            }
+            diseaseData.forEach(function(data) {
+                var symptomMatches = data.symptoms.filter(symptom => symptoms.includes(symptom));
+                if (symptomMatches.length > 0) {
+                    possibleDiseases.push(data.disease);
+                    possibleMedicines.push(data.medicines);
+                }
+            });
 
             if (possibleDiseases.length === 0) {
                 possibleDiseases.push("Unknown");
+                possibleMedicines.push([]);
             }
 
-            return possibleDiseases;
+            return { diseases: possibleDiseases, medicines: possibleMedicines };
         }
     </script>
 </body>
