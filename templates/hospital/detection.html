@@ -1,0 +1,548 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Disease Prediction</title>-->
+<!--    <style>-->
+<!--        body {-->
+<!--            font-family: Arial, sans-serif;-->
+<!--            margin: 0;-->
+<!--            padding: 20px;-->
+<!--            background-color: #f0f0f0;-->
+<!--        }-->
+<!--        h1 {-->
+<!--            text-align: center;-->
+<!--            margin-bottom: 20px;-->
+<!--            color: #007bff;-->
+<!--            animation: fadeIn 2s ease-in-out;-->
+<!--        }-->
+<!--        form {-->
+<!--            max-width: 400px;-->
+<!--            margin: 0 auto;-->
+<!--            background-color: #fff;-->
+<!--            padding: 20px;-->
+<!--            border-radius: 8px;-->
+<!--            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);-->
+<!--            animation: slideIn 1s ease-in-out;-->
+<!--        }-->
+<!--        label {-->
+<!--            display: block;-->
+<!--            margin-bottom: 10px;-->
+<!--            font-weight: bold;-->
+<!--        }-->
+<!--        input[type="checkbox"] {-->
+<!--            margin-right: 5px;-->
+<!--        }-->
+<!--        button[type="submit"] {-->
+<!--            background-color: #007bff;-->
+<!--            color: #fff;-->
+<!--            border: none;-->
+<!--            padding: 10px 20px;-->
+<!--            border-radius: 4px;-->
+<!--            cursor: pointer;-->
+<!--            transition: background-color 0.3s ease;-->
+<!--        }-->
+<!--        button[type="submit"]:hover {-->
+<!--            background-color: #0056b3;-->
+<!--        }-->
+<!--        #predictionResult {-->
+<!--            margin-top: 20px;-->
+<!--            text-align: center;-->
+<!--            animation: fadeIn 2s ease-in-out;-->
+<!--        }-->
+<!--        @keyframes fadeIn {-->
+<!--            from {-->
+<!--                opacity: 0;-->
+<!--            }-->
+<!--            to {-->
+<!--                opacity: 1;-->
+<!--            }-->
+<!--        }-->
+<!--        @keyframes slideIn {-->
+<!--            from {-->
+<!--                transform: translateY(-20px);-->
+<!--                opacity: 0;-->
+<!--            }-->
+<!--            to {-->
+<!--                transform: translateY(0);-->
+<!--                opacity: 1;-->
+<!--            }-->
+<!--        }-->
+<!--        .disease-list {-->
+<!--            list-style: none;-->
+<!--            padding: 0;-->
+<!--            margin: 0;-->
+<!--            max-width: 400px;-->
+<!--            margin: 20px auto;-->
+<!--            background-color: #fff;-->
+<!--            border-radius: 8px;-->
+<!--            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);-->
+<!--        }-->
+<!--        .disease-list li {-->
+<!--            border-bottom: 1px solid #e9ecef;-->
+<!--            padding: 10px;-->
+<!--        }-->
+<!--        .disease-list li:last-child {-->
+<!--            border-bottom: none;-->
+<!--        }-->
+<!--        .disease-name {-->
+<!--            font-weight: bold;-->
+<!--            color: #007bff;-->
+<!--        }-->
+<!--        .medicine-list {-->
+<!--            margin-top: 5px;-->
+<!--            color: #555;-->
+<!--        }-->
+<!--        .medicine-list a {-->
+<!--            display: inline-block;-->
+<!--            margin: 5px 0;-->
+<!--            color: #007bff;-->
+<!--            text-decoration: none;-->
+<!--        }-->
+<!--        .medicine-list a:hover {-->
+<!--            text-decoration: underline;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <h1>Disease Prediction</h1>-->
+<!--    <form id="symptomForm" onsubmit="predictDisease(event)">-->
+<!--        <label for="symptoms">Select Symptoms:</label>-->
+<!--        <div>-->
+<!--            <input type="checkbox" name="symptoms" value="Fever"> Fever<br>-->
+<!--            <input type="checkbox" name="symptoms" value="Cough"> Cough<br>-->
+<!--            <input type="checkbox" name="symptoms" value="Sore throat"> Sore throat<br>-->
+<!--            <input type="checkbox" name="symptoms" value="Runny nose"> Runny nose<br>-->
+<!--            <input type="checkbox" name="symptoms" value="Headache"> Headache<br>-->
+<!--            <input type="checkbox" name="symptoms" value="Fatigue"> Fatigue<br>-->
+<!--            <input type="checkbox" name="symptoms" value="Shortness of breath"> Shortness of breath<br>-->
+<!--            <input type="checkbox" name="symptoms" value="Nausea"> Nausea<br>-->
+<!--            <input type="checkbox" name="symptoms" value="Vomiting"> Vomiting<br>-->
+<!--            <input type="checkbox" name="symptoms" value="Joint pain"> Joint pain<br>-->
+<!--            <input type="checkbox" name="symptoms" value="Dizziness"> Dizziness<br>-->
+<!--            <input type="checkbox" name="symptoms" value="Itching"> Itching<br>-->
+<!--            <input type="checkbox" name="symptoms" value="Redness"> Redness<br>-->
+<!--            <input type="checkbox" name="symptoms" value="Abdominal pain"> Abdominal pain<br>-->
+<!--            <input type="checkbox" name="symptoms" value="Bloating"> Bloating<br>-->
+<!--            <input type="checkbox" name="symptoms" value="Sadness"> Sadness<br>-->
+<!--            <input type="checkbox" name="symptoms" value="Muscle aches"> Muscle aches<br>-->
+<!--            <input type="checkbox" name="symptoms" value="Sneezing"> Sneezing<br>-->
+<!--            <input type="checkbox" name="symptoms" value="Blurred vision"> Blurred vision<br>-->
+<!--            <input type="checkbox" name="symptoms" value="Diarrhea"> Diarrhea<br>-->
+<!--            <input type="checkbox" name="symptoms" value="Swelling"> Swelling<br>-->
+<!--            <input type="checkbox" name="symptoms" value="Back pain"> Back pain<br>-->
+<!--            <input type="checkbox" name="symptoms" value="Numbness"> Numbness<br>-->
+<!--            <input type="checkbox" name="symptoms" value="Weakness"> Weakness<br>-->
+<!--            <input type="checkbox" name="symptoms" value="Rapid heartbeat"> Rapid heartbeat<br>-->
+<!--            <input type="checkbox" name="symptoms" value="Skin rash"> Skin rash<br>-->
+<!--            &lt;!&ndash; Add more checkboxes for other symptoms if needed &ndash;&gt;-->
+<!--        </div>-->
+<!--        <button type="submit">Predict Disease</button>-->
+<!--    </form>-->
+
+<!--    <div id="predictionResult"></div>-->
+
+<!--    <script>-->
+<!--        function predictDisease(event) {-->
+<!--            event.preventDefault(); // Prevent form submission-->
+
+<!--            // Get selected symptoms-->
+<!--            var symptoms = [];-->
+<!--            var checkboxes = document.getElementsByName('symptoms');-->
+<!--            checkboxes.forEach(function(checkbox) {-->
+<!--                if (checkbox.checked) {-->
+<!--                    symptoms.push(checkbox.value);-->
+<!--                }-->
+<!--            });-->
+
+<!--            // Predict diseases based on symptoms-->
+<!--            var prediction = predict(symptoms);-->
+
+<!--            // Display possible diseases and prescriptions-->
+<!--            var resultDiv = document.getElementById('predictionResult');-->
+<!--            if (prediction.diseases.length > 0 && prediction.diseases[0] !== "Unknown") {-->
+<!--                resultDiv.innerHTML = "<h2>Possible Diseases and Prescriptions:</h2>";-->
+<!--                var diseaseList = document.createElement('ul');-->
+<!--                diseaseList.className = 'disease-list';-->
+<!--                prediction.diseases.forEach(function(disease, index) {-->
+<!--                    var listItem = document.createElement('li');-->
+<!--                    var medicinesHTML = prediction.medicines[index].map(function(medicine) {-->
+<!--                        return '<a href="https://www.1mg.com/search/all?name=' + encodeURIComponent(medicine) + '" target="_blank">' + medicine + '</a>';-->
+<!--                    }).join(", ");-->
+<!--                    listItem.innerHTML = "<span class='disease-name'>" + disease + ":</span><div class='medicine-list'>" + medicinesHTML + "</div>";-->
+<!--                    diseaseList.appendChild(listItem);-->
+<!--                });-->
+<!--                resultDiv.appendChild(diseaseList);-->
+<!--            } else {-->
+<!--                resultDiv.innerHTML = "<h2>Possible Diseases:</h2><p>Unknown. Please select multiple symptoms if necessary.</p>";-->
+<!--            }-->
+<!--        }-->
+
+<!--        function predict(symptoms) {-->
+<!--            // Disease prediction logic-->
+<!--            var diseaseData = [-->
+<!--                { symptoms: ["Fever", "Cough"], disease: "Common Cold", medicines: ["Ibuprofen", "Rest"] },-->
+<!--                { symptoms: ["Headache", "Fatigue"], disease: "Migraine", medicines: ["Sumatriptan"] },-->
+<!--                { symptoms: ["Shortness of breath"], disease: "Asthma", medicines: ["Albuterol Inhaler"] },-->
+<!--                { symptoms: ["Nausea", "Vomiting"], disease: "Gastroenteritis", medicines: ["Oral Rehydration"] },-->
+<!--                { symptoms: ["Sore Throat"], disease: "Strep Throat", medicines: ["Penicillin"] },-->
+<!--                { symptoms: ["Joint pain", "Fatigue"], disease: "Arthritis", medicines: ["NSAIDs"] },-->
+<!--                { symptoms: ["Chest pain", "Dizziness"], disease: "Hypertension", medicines: ["Amlodipine"] },-->
+<!--                { symptoms: ["Itching", "Redness"], disease: "Allergic Reaction", medicines: ["Antihistamine"] },-->
+<!--                { symptoms: ["Abdominal pain", "Bloating"], disease: "Indigestion", medicines: ["Antacids"] },-->
+<!--                { symptoms: ["Fatigue", "Sadness"], disease: "Major Depressive", medicines: ["Sertraline"] },-->
+<!--                { symptoms: ["Fever", "Muscle aches"], disease: "Influenza", medicines: ["Acetaminophen"] },-->
+<!--                { symptoms: ["Cough", "Sneezing"], disease: "Common Cold", medicines: ["Honey", "Rest"] },-->
+<!--                { symptoms: ["Nausea", "Dizziness"], disease: "Motion Sickness", medicines: ["Dimenhydrinate"] },-->
+<!--                { symptoms: ["Shortness of breath"], disease: "Chronic Bronchitis", medicines: ["Inhalers"] },-->
+<!--                { symptoms: ["Headache", "Blurred vision"], disease: "Migraine", medicines: ["Beta-blockers"] },-->
+<!--                { symptoms: ["Stomach pain", "Diarrhea"], disease: "Gastritis", medicines: ["Antacids", "Rest"] },-->
+<!--                { symptoms: ["Joint pain", "Swelling"], disease: "Rheumatoid Arthritis", medicines: ["NSAIDs"] },-->
+<!--                { symptoms: ["Fever", "Sore Throat"], disease: "Tonsillitis", medicines: ["Fluids", "Rest"] },-->
+<!--                { symptoms: ["Back pain", "Numbness"], disease: "Sciatica", medicines: ["Pain Relievers"] },-->
+<!--                { symptoms: ["Nausea", "Vomiting"], disease: "Morning Sickness", medicines: ["Ginger", "Vitamin B6"] },-->
+<!--                { symptoms: ["Fatigue", "Weakness"], disease: "Iron Deficiency", medicines: ["Iron Supplements"] },-->
+<!--                { symptoms: ["Anxiety", "Rapid heartbeat"], disease: "Panic Disorder", medicines: ["Cognitive Therapy"] },-->
+<!--                { symptoms: ["Shortness of breath"], disease: "Sleep Apnea", medicines: ["CPAP Machine"] },-->
+<!--                { symptoms: ["Skin rash", "Itching"], disease: "Dermatitis", medicines: ["Topical Steroids"] },-->
+<!--                { symptoms: ["Cough", "Fever"], disease: "Respiratory infection", medicines: ["Antivirals", "Rest"] }-->
+<!--            ];-->
+
+<!--            var possibleDiseases = [];-->
+<!--            var possibleMedicines = [];-->
+
+<!--            diseaseData.forEach(function(data) {-->
+<!--                var symptomMatches = data.symptoms.filter(symptom => symptoms.includes(symptom));-->
+<!--                if (symptomMatches.length > 0) {-->
+<!--                    possibleDiseases.push(data.disease);-->
+<!--                    possibleMedicines.push(data.medicines);-->
+<!--                }-->
+<!--            });-->
+
+<!--            if (possibleDiseases.length === 0) {-->
+<!--                possibleDiseases.push("Unknown");-->
+<!--                possibleMedicines.push([]);-->
+<!--            }-->
+
+<!--            return { diseases: possibleDiseases, medicines: possibleMedicines };-->
+
+
+<!--        }-->
+<!--    </script>-->
+
+<!--    <script>-->
+<!--    function savePrediction() {-->
+<!--            var confirmedDisease = document.getElementById('confirmedDisease').innerText;-->
+<!--            var confirmedMedications = [];-->
+<!--            document.querySelectorAll('#confirmedMedications li').forEach(function(medication) {-->
+<!--                confirmedMedications.push(medication.innerText);-->
+<!--            });-->
+
+<!--            var prediction = {-->
+<!--                disease: confirmedDisease,-->
+<!--                medicines: confirmedMedications-->
+<!--            };-->
+
+<!--            var savedPredictions = JSON.parse(localStorage.getItem('predictions')) || [];-->
+<!--            savedPredictions.push(prediction);-->
+<!--            localStorage.setItem('predictions', JSON.stringify(savedPredictions));-->
+
+<!--            alert("Prediction saved successfully!");-->
+<!--            displaySavedPredictions();-->
+<!--}-->
+<!--        function displaySavedPredictions() {-->
+<!--            var savedPredictions = JSON.parse(localStorage.getItem('predictions')) || [];-->
+<!--            var predictionsTable = document.getElementById('predictionsTable');-->
+<!--            predictionsTable.innerHTML = '<tr><th>Disease</th><th>Medications</th></tr>';-->
+
+<!--            savedPredictions.forEach(function(prediction) {-->
+<!--                var row = '<tr><td>' + prediction.disease + '</td><td>' + prediction.medicines.join(', ') + '</td></tr>';-->
+<!--                predictionsTable.innerHTML += row;-->
+<!--         });-->
+<!--}-->
+<!--        window.onload = displaySavedPredictions;-->
+
+<!--</script>-->
+<!--<div id="confirmationDetails" style="display: none;">-->
+<!--        <h2>Confirmed Disease and Medications:</h2>-->
+<!--        <p id="confirmedDisease"></p>-->
+<!--        <ul id="confirmedMedications"></ul>-->
+<!--        <button onclick="savePrediction()">Save Prediction</button>-->
+<!--    </div>-->
+<!--    <h2>Saved Predictions</h2>-->
+<!--    <table id="predictionsTable"></table>-->
+
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #007bff;
+            animation: fadeIn 2s ease-in-out;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            animation: slideIn 1s ease-in-out;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        #predictionResult {
+            margin-top: 20px;
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .disease-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            max-width: 400px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .disease-list li {
+            border-bottom: 1px solid #e9ecef;
+            padding: 10px;
+        }
+        .disease-list li:last-child {
+            border-bottom: none;
+        }
+        .disease-name {
+            font-weight: bold;
+            color: #007bff;
+        }
+        .medicine-list {
+            margin-top: 5px;
+            color: #555;
+        }
+        .medicine-list a {
+            display: inline-block;
+            margin: 5px 0;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .medicine-list a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Disease Prediction</h1>
+    <form id="symptomForm" onsubmit="predictDisease(event)">-->
+        <label for="symptoms">Select Symptoms:</label>
+        <div>
+            <input type="checkbox" name="symptoms" value="Fever"> Fever<br>
+            <input type="checkbox" name="symptoms" value="Cough"> Cough<br>
+            <input type="checkbox" name="symptoms" value="Sore throat"> Sore throat<br>
+            <input type="checkbox" name="symptoms" value="Runny nose"> Runny nose<br>
+            <input type="checkbox" name="symptoms" value="Headache"> Headache<br>
+            <input type="checkbox" name="symptoms" value="Fatigue"> Fatigue<br>
+            <input type="checkbox" name="symptoms" value="Shortness of breath"> Shortness of breath<br>
+            <input type="checkbox" name="symptoms" value="Nausea"> Nausea<br>
+            <input type="checkbox" name="symptoms" value="Vomiting"> Vomiting<br>
+            <input type="checkbox" name="symptoms" value="Joint pain"> Joint pain<br>
+            <input type="checkbox" name="symptoms" value="Dizziness"> Dizziness<br>
+            <input type="checkbox" name="symptoms" value="Itching"> Itching<br>
+            <input type="checkbox" name="symptoms" value="Redness"> Redness<br>
+            <input type="checkbox" name="symptoms" value="Abdominal pain"> Abdominal pain<br>
+            <input type="checkbox" name="symptoms" value="Bloating"> Bloating<br>
+            <input type="checkbox" name="symptoms" value="Sadness"> Sadness<br>
+            <input type="checkbox" name="symptoms" value="Muscle aches"> Muscle aches<br>
+            <input type="checkbox" name="symptoms" value="Sneezing"> Sneezing<br>
+            <input type="checkbox" name="symptoms" value="Blurred vision"> Blurred vision<br>
+            <input type="checkbox" name="symptoms" value="Diarrhea"> Diarrhea<br>
+            <input type="checkbox" name="symptoms" value="Swelling"> Swelling<br>
+            <input type="checkbox" name="symptoms" value="Back pain"> Back pain<br>
+            <input type="checkbox" name="symptoms" value="Numbness"> Numbness<br>
+            <input type="checkbox" name="symptoms" value="Weakness"> Weakness<br>
+            <input type="checkbox" name="symptoms" value="Rapid heartbeat"> Rapid heartbeat<br>
+            <input type="checkbox" name="symptoms" value="Skin rash"> Skin rash<br>
+            <!-- Add more checkboxes for other symptoms if needed -->
+        </div>
+        <button type="submit">Predict Disease</button>
+    </form>
+
+    <div id="predictionResult"></div>
+
+    <div id="confirmationDetails" style="display: none;">
+        <h2>Confirmed Disease and Medications:</h2>
+        <p id="confirmedDisease"></p>
+        <ul id="confirmedMedications"></ul>
+        <button onclick="confirmPrediction()">Confirm</button>
+    </div>
+
+    <script>
+        function predictDisease(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Get selected symptoms
+            var symptoms = [];
+            var checkboxes = document.getElementsByName('symptoms');
+            checkboxes.forEach(function(checkbox) {
+                if (checkbox.checked) {
+                    symptoms.push(checkbox.value);
+                }
+            });
+
+            // Predict diseases based on symptoms
+            var prediction = predict(symptoms);
+
+            // Display predicted diseases and medications
+            if (prediction.diseases.length > 0 && prediction.diseases[0] !== "Unknown") {
+                // Display prediction result
+                document.getElementById('predictionResult').innerHTML = "<h2>Possible Diseases and Prescriptions:</h2>";
+                // Display diseases and medications
+                var diseaseList = document.createElement('ul');
+                diseaseList.className = 'disease-list';
+                prediction.diseases.forEach(function(disease, index) {
+                    var listItem = document.createElement('li');
+                    var medicinesHTML = prediction.medicines[index].map(function(medicine) {
+                        return '<a href="https://www.1mg.com/search/all?name=' + encodeURIComponent(medicine) + '" target="_blank">' + medicine + '</a>';
+                    }).join(", ");
+                    listItem.innerHTML = "<span class='disease-name'>" + disease + ":</span><div class='medicine-list'>" + medicinesHTML + "</div>";
+                    diseaseList.appendChild(listItem);
+                });
+                document.getElementById('predictionResult').appendChild(diseaseList);
+
+                // Show the confirmation button
+                document.getElementById('confirmationDetails').style.display = 'block';
+            } else {
+                // Handle case when no diseases are predicted
+                document.getElementById('predictionResult').innerHTML = "<h2>Possible Diseases:</h2><p>Unknown. Please select multiple symptoms if necessary.</p>";
+            }
+        }
+
+        function predict(symptoms) {
+            // Disease prediction logic
+            var diseaseData = [
+                { symptoms: ["Fever", "Cough"], disease: "Common Cold", medicines: ["Ibuprofen", "Rest"] },
+                { symptoms: ["Headache", "Fatigue"], disease: "Migraine", medicines: ["Sumatriptan"] },
+                { symptoms: ["Shortness of breath"], disease: "Asthma", medicines: ["Albuterol Inhaler"] },
+                { symptoms: ["Nausea", "Vomiting"], disease: "Gastroenteritis", medicines: ["Oral Rehydration"] },
+                { symptoms: ["Sore Throat"], disease: "Strep Throat", medicines: ["Penicillin"] },
+                { symptoms: ["Joint pain", "Fatigue"], disease: "Arthritis", medicines: ["NSAIDs"] },
+                { symptoms: ["Chest pain", "Dizziness"], disease: "Hypertension", medicines: ["Amlodipine"] },
+                { symptoms: ["Itching", "Redness"], disease: "Allergic Reaction", medicines: ["Antihistamine"] },
+                { symptoms: ["Abdominal pain", "Bloating"], disease: "Indigestion", medicines: ["Antacids"] },
+                { symptoms: ["Fatigue", "Sadness"], disease: "Major Depressive", medicines: ["Sertraline"] },
+                { symptoms: ["Fever", "Muscle aches"], disease: "Influenza", medicines: ["Acetaminophen"] },
+                { symptoms: ["Cough", "Sneezing"], disease: "Common Cold", medicines: ["Honey", "Rest"] },
+                { symptoms: ["Nausea", "Dizziness"], disease: "Motion Sickness", medicines: ["Dimenhydrinate"] },
+                { symptoms: ["Shortness of breath"], disease: "Chronic Bronchitis", medicines: ["Inhalers"] },
+                { symptoms: ["Headache", "Blurred vision"], disease: "Migraine", medicines: ["Beta-blockers"] },
+                { symptoms: ["Stomach pain", "Diarrhea"], disease: "Gastritis", medicines: ["Antacids", "Rest"] },
+                { symptoms: ["Joint pain", "Swelling"], disease: "Rheumatoid Arthritis", medicines: ["NSAIDs"] },
+                { symptoms: ["Fever", "Sore Throat"], disease: "Tonsillitis", medicines: ["Fluids", "Rest"] },
+                { symptoms: ["Back pain", "Numbness"], disease: "Sciatica", medicines: ["Pain Relievers"] },
+                { symptoms: ["Nausea", "Vomiting"], disease: "Morning Sickness", medicines: ["Ginger", "Vitamin B6"] },
+                { symptoms: ["Fatigue", "Weakness"], disease: "Iron Deficiency", medicines: ["Iron Supplements"] },
+                { symptoms: ["Anxiety", "Rapid heartbeat"], disease: "Panic Disorder", medicines: ["Cognitive Therapy"] },
+                { symptoms: ["Shortness of breath"], disease: "Sleep Apnea", medicines: ["CPAP Machine"] },
+                { symptoms: ["Skin rash", "Itching"], disease: "Dermatitis", medicines: ["Topical Steroids"] },
+                { symptoms: ["Cough", "Fever"], disease: "Respiratory infection", medicines: ["Antivirals", "Rest"] }
+            ];
+
+            var possibleDiseases = [];
+            var possibleMedicines = [];
+
+            diseaseData.forEach(function(data) {
+                var symptomMatches = data.symptoms.filter(symptom => symptoms.includes(symptom));
+                if (symptomMatches.length > 0) {
+                    possibleDiseases.push(data.disease);
+                    possibleMedicines.push(data.medicines);
+                }
+            });
+
+            if (possibleDiseases.length === 0) {
+                possibleDiseases.push("Unknown");
+                possibleMedicines.push([]);
+            }
+
+            return { diseases: possibleDiseases, medicines: possibleMedicines };
+
+
+        }
+
+        function confirmPrediction() {
+    var confirmedDisease = document.getElementById('confirmedDisease').innerText;
+    var confirmedMedications = [];
+    document.querySelectorAll('#confirmedMedications li').forEach(function(medication) {
+        confirmedMedications.push(medication.innerText);
+    });
+
+    var predictedDisease = document.getElementById('predictionResult').querySelector('.disease-name').innerText;
+    var predictedMedications = [];
+    document.querySelectorAll('#predictionResult .medicine-list a').forEach(function(medication) {
+        predictedMedications.push(medication.innerText);
+    });
+
+    // Convert medications array to comma-separated string
+    var confirmedMedicationsStr = confirmedMedications.join(', ');
+    var predictedMedicationsStr = predictedMedications.join(', ');
+
+    // Redirect to the patient dashboard with both predicted and confirmed disease and medications
+    window.location.href = '/patient-dashboard?disease=' + encodeURIComponent(confirmedDisease) + '&medications=' + encodeURIComponent(confirmedMedicationsStr) + '&predicted_disease=' + encodeURIComponent(predictedDisease) + '&predicted_medications=' + encodeURIComponent(predictedMedicationsStr);
+}
+
+    </script>
+</body>
+</html>

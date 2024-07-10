@@ -1,0 +1,59 @@
+{% extends 'hospital/patient_base.html' %}
+{% load static %}
+{% block content %}
+{% include 'hospital/patient_dashboard_cards.html' %}
+<br><br><br><br>
+<div>
+    <a href="{% url 'detection' %}" class="btn btn-primary">Disease Detection see</a>
+</div>
+
+<div>
+    <a href="{% url 'new_insurance_page' %}" class="btn btn-primary">Insurance</a>
+
+</div>
+
+<h6 class="panel-title">Your Appointments</h6>
+      </div>
+      <table class="table table-hover" id="dev-table">
+        <thead>
+          <tr>
+            <th>Doctor Name</th>
+            <th>Description</th>
+            <th>Date</th>
+            <th>Prescription</th>
+          </tr>
+        </thead>
+        {% for a in appointments %}
+        <tr>
+          <td>{{a.doctorName}}</td>
+          <td>{{a.description}}</td>
+          <td>{{a.appointmentDate}}</td>
+          <td>
+            {% with prescription_path='prescriptions/'|add:a.id|add:'.docx' %}
+            {% if prescription_path|file_exists %}
+            <a href="{{ prescription_path }}" class="btn btn-primary">Download Prescription</a>
+            {% else %}
+            No Prescription
+            {% endif %}
+            {% endwith %}
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+
+<!-- Display predicted and confirmed disease and medications -->
+{% if request.GET.disease %}
+    <h2>Confirmed Disease and Medications:</h2>
+    <p>Disease: {{ request.GET.disease }}</p>
+    <p>Medications: {{ request.GET.medications }}</p>
+{% endif %}
+
+{% if request.GET.predicted_disease %}
+    <h2>Predicted Disease and Medications:</h2>
+    <p>Disease: {{ request.GET.predicted_disease }}</p>
+    <p>Medications: {{ request.GET.predicted_medications }}</p>
+{% endif %}
+
+{% endblock content %}

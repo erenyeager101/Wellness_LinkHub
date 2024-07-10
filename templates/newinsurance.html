@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Insurance Assistant</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+  /* Your existing CSS styles */
+  </style>
+</head>
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#about">ABOUT</a></li>
+        <li><a href="#services">SERVICES</a></li>
+        <li><a href="#pricing">PRICING</a></li>
+        <li><a href="#contact">CLAIM INSURANCE</a></li> <!-- Changed "QUERIES" to "CLAIM INSURANCE" -->
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="jumbotron text-center">
+  <h1>Insurance Assistant</h1>
+  <form>
+    <div class="input-group">
+      <input type="email" class="form-control" size="50" placeholder="Email Address" required>
+      <div class="input-group-btn">
+        <button type="button" class="btn btn-danger">Subscribe</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- Container (About Section) -->
+<!-- Your existing about section content -->
+
+<!-- Container (Services Section) -->
+<!-- Your existing services section content -->
+
+<!-- Container (Pricing Section) -->
+<!-- Your existing pricing section content -->
+
+<!-- Container (Contact Section) -->
+<div id="contact" class="container-fluid bg-grey">
+  <h2 class="text-center">CLAIM INSURANCE</h2> <!-- Changed heading to "CLAIM INSURANCE" -->
+  <div class="row">
+    <div class="col-sm-5">
+      <form id="claimForm"> <!-- Added a form for claiming insurance -->
+        <div class="form-group">
+          <label for="name">Full Name:</label>
+          <input type="text" class="form-control" id="name" placeholder="Enter your full name" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">Mobile Number:</label>
+          <input type="tel" class="form-control" id="phone" placeholder="Enter your mobile number" required>
+        </div>
+        <div class="form-group">
+          <label for="insuranceId">Insurance ID:</label>
+          <input type="text" class="form-control" id="insuranceId" placeholder="Enter your insurance ID" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      <div id="successMessage" style="display: none; margin-top: 20px;" class="alert alert-success">
+        <strong>Success!</strong> You have successfully claimed the insurance.
+      </div>
+    </div>
+    <div class="col-sm-7 slideanim">
+      <script src="https://assistant-web.watsonplatform.net/loadWatsonAssistantChat.js"></script>
+      <!-- Your existing Watson Assistant chat script -->
+    </div>
+  </div>
+</div>
+
+<footer class="container-fluid text-center">
+  <a href="#myPage" title="To Top">
+    <span class="glyphicon glyphicon-chevron-up"></span>
+  </a>
+</footer>
+
+<script>
+$(document).ready(function(){
+  $('#claimForm').submit(function(e) {
+    e.preventDefault(); // Prevent form submission
+    
+    // Get input values
+    var fullName = $('#name').val();
+    var mobileNumber = $('#phone').val();
+    var insuranceId = $('#insuranceId').val();
+    
+    // Check if insurance ID is correct
+    if (insuranceId.trim() === '123456789') {
+      // Show success message
+      $('#successMessage').show();
+      
+      // You can add code here to showcase insurance details on the patient dashboard
+    } else {
+      // Display error message or handle invalid insurance ID
+      alert('Invalid insurance ID. Please enter the correct ID.');
+    }
+  });
+});
+</script>
+
+<script>
+    $(document).ready(function(){
+      $('#claimForm').submit(function(e) {
+        e.preventDefault(); // Prevent form submission
+        
+        // Get input values
+        var fullName = $('#name').val();
+        var mobileNumber = $('#phone').val();
+        var insuranceId = $('#insuranceId').val();
+        
+        // Check if insurance ID is correct
+        if (insuranceId.trim() === '123456789') {
+          // Redirect to patient dashboard with insurance details
+          var url = 'patient-dashboard'; // Assuming patient dashboard URL is 'patient-dashboard'
+          url += '?fullName=' + encodeURIComponent(fullName);
+          url += '&mobileNumber=' + encodeURIComponent(mobileNumber);
+          url += '&insuranceId=' + encodeURIComponent(insuranceId);
+          window.location.href = url;
+        } else {
+          // Display error message or handle invalid insurance ID
+          alert('Invalid insurance ID. Please enter the correct ID.');
+        }
+      });
+    });
+    </script>
+    
+</body>
+</html>

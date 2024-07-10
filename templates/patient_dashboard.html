@@ -1,0 +1,111 @@
+{% extends 'hospital/patient_base.html' %}
+{% load static %}
+{% block content %}
+{% include 'hospital/patient_dashboard_cards.html' %}
+<br><br><br><br>
+
+<style>
+  .btn {
+    display: inline-block;
+    font-weight: 400;
+    color: #ffffff;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    background-color: #007bff;
+    border: 1px solid #007bff;
+    padding: 0.375rem 0.75rem;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    border-radius: 0.3rem;
+    text-decoration: none;
+    margin: 0.5rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+
+  .btn:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+  }
+
+  .section-title {
+    margin-top: 2rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  .info {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+  }
+</style>
+
+<div>
+  <a href="{% url 'detection' %}" class="btn">Disease Detection</a>
+  <a href="{% url 'insurance' %}" class="btn">Insurance</a>
+</div>
+
+<h6 class="panel-title">Your Appointments</h6>
+</div>
+<table class="table table-hover" id="dev-table">
+  <thead>
+    <tr>
+      <th>Doctor Name</th>
+      <th>Description</th>
+      <th>Date</th>
+      <th>Prescription</th>
+    </tr>
+  </thead>
+  {% for a in appointments %}
+  <tr>
+    <td>{{a.doctorName}}</td>
+    <td>{{a.description}}</td>
+    <td>{{a.appointmentDate}}</td>
+  </tr>
+  {% endfor %}
+</table>
+</div>
+
+<!-- Display predicted and confirmed disease and medications -->
+{% if request.GET.disease %}
+  <div class="section-title">Confirmed Disease and Medications:</div>
+  <div class="info">
+    <p><strong>Disease:</strong> {{ request.GET.disease }}</p>
+    <p><strong>Medications:</strong> {{ request.GET.medications }}</p>
+  </div>
+{% endif %}
+
+{% if request.GET.predicted_disease %}
+  <div class="section-title">Predicted Disease and Medications:</div>
+  <div class="info">
+    <p><strong>Disease:</strong> {{ request.GET.predicted_disease }}</p>
+    <p><strong>Medications:</strong> {{ request.GET.predicted_medications }}</p>
+  </div>
+
+{% endif %}
+<div id="insuranceDetails">
+  <!-- Insurance details will be displayed here using JavaScript -->
+</div>
+
+<script>
+  // Retrieve insurance details from URL parameters
+var params = new URLSearchParams(window.location.search);
+var fullName = params.get('fullName');
+var mobileNumber = params.get('mobileNumber');
+var insuranceId = params.get('insuranceId');
+
+// Store insurance details in sessionStorage
+sessionStorage.setItem('fullName', fullName);
+sessionStorage.setItem('mobileNumber', mobileNumber);
+sessionStorage.setItem('insuranceId', insuranceId);
+
+// Display insurance details
+var insuranceDetailsDiv = document.getElementById('insuranceDetails');
+insuranceDetailsDiv.innerHTML += '<h2>Insurance Details</h2>' +
+  '<p><strong>Full Name:</strong> ' + fullName + '</p>' +
+  '<p><strong>Mobile Number:</strong> ' + mobileNumber + '</p>' +
+  '<p><strong>Insurance ID:</strong> ' + insuranceId + '</p>';
+
+</script>
+
+{% endblock content %}
